@@ -53,7 +53,7 @@ public class PriceCalculator
             if (!Int32.TryParse(stringId, out id))
             {
                 // invalid input, respond with error
-                throw new ArgumentException();
+                throw new ArgumentException("Input given was not an integer!");
             }
 
             if (WatchCheckoutCount.ContainsKey(id))
@@ -77,7 +77,7 @@ public class PriceCalculator
             Watch? w = TypesOfWatches.Find(watch => watch.Id == item.Key);
             if (w == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentException($"Item with ID {item.Key} not found in database");
             }
             
             if(w.UnitsForDiscount == 0){

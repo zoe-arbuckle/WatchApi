@@ -1,3 +1,4 @@
+using System.Globalization;
 using WatchApi;
 using WatchApi.Controller;
 
@@ -20,5 +21,31 @@ public class WatchApiTest
         int result = calculator.CalculateTotal(ids);
 
         Assert.Equal(260, result);
+    }
+
+    [Fact]
+    public void UnknownInput(){
+        string[] ids = new string[]{"006"};
+        PriceCalculator calculator = new PriceCalculator();
+        
+        Assert.Throws<ArgumentException>(() => calculator.CalculateTotal(ids));
+    }
+
+    [Fact]
+    public void InvalidInput()
+    {
+        string[] ids = new string[]{"Not an integer"};
+        PriceCalculator calculator = new PriceCalculator();
+
+        Assert.Throws<ArgumentException>(() => calculator.CalculateTotal(ids));
+    }
+
+    [Fact]
+    public void DiscountTest()
+    {
+        string[] ids = new string[]{"001", "001", "001"};
+        PriceCalculator calculator = new PriceCalculator();
+
+        Assert.Equal(200, calculator.CalculateTotal(ids));
     }
 }

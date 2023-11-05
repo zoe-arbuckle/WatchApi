@@ -7,7 +7,13 @@ var app = builder.Build();
 app.MapPost("/checkout", (string[] ids) =>
 {
     PriceCalculator calculator = new PriceCalculator();
-    return new { Price = calculator.CalculateTotal(ids) };
+    try{
+        int totalPrice = calculator.CalculateTotal(ids);
+        return TypedResults.Ok(new {Price = totalPrice});
+    } catch (ArgumentException){
+        return Results.BadRequest();
+    }
+    
 });
 
 app.Run();
