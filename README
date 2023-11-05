@@ -1,1 +1,33 @@
 WatchAPI is a minimal API implementation for calculating the total price of a given list of watches. 
+The project structure is designed as follows:
+    \WatchApi
+    WatchApi.sln
+    |---\WatchApi
+        Program.cs
+        WatchApi.csproj
+    |---\WatchApiTest
+        WatchApiTest.cs
+        WatchAPiTest.csproj
+
+#Running the API
+This API is written using C#/.NET. To use, clone this repository onto a computer with the .NET SDK version 7 installed.
+To run the API, go to the WatchApi project folder. This folder contains WatchApi.csproj. From a terminal, run the command `dotnet run` to start the API locally.
+Using either a browser or an API platform such as Postman, create an HTTP Post request for the endpoint (http://localhost:5166/checkout). An empty body in the post request will return a price of 0.
+You can fill in the body with a JSON array of strings representing IDs or integers, for example:
+`["001, "002", "003", "004"]` is a valid body.
+Invalid input such as other strings or items not recognized by the program will result in a 400 - Bad request response. 
+
+#Running the tests
+Tests are written in xUnit for unit testing. Full functional testing was done manually using Postman as described above.
+To run the unit tests, run the command `dotnet test` in the top solution folder. This folder contains WatchApi.sln and all the other subdirectories.
+
+#Approach
+I started with the absolute basics, getting a POST request to take input and give a response. From there I started building the core functionality of the project, starting with basic price calculations and ignoring the discount. Once that was working, I started adding robustness such as the discount calculation, null checking, and exceptions. As the code got larger, I started separating it into the logical modules, so the folder Models contains the class model for a Watch, and the Controller folder holds the PriceCalculator, which performs all calculations of price and calculations of the number of each item in the checkout.
+
+Once this was done I ran into an issue, which was that my folder structure was causing issues with running the xUnit tests. Once the WatchApi files were moved to a subfolder at the same level as the test project, everything worked again. 
+
+For my unit tests, I started with what I knew should work, so the zero prices and the valid inputs. Then I moved on to invalid inputs and checking that the expected errors were thrown. 
+
+#Improvements I would make 
+1. Automation of the endpoint testing, not just unit testing. I'm just not familiar with how to do this yet. 
+2. Connect to a SQL db to get the data about the watches. For the sake of time and simplicity, I just made a list of the data since it was a very small amount. This would obviously be ineffective for large sets of data such as an e-commerce site might see, as well as difficult to maintain. 
