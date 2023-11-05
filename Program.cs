@@ -10,6 +10,4 @@ app.MapPost("/checkout", (string[] ids) =>
     return new { Price = calculator.CalculateTotal(ids) };
 });
 
-
-
 app.Run();
