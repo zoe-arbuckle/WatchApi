@@ -79,9 +79,13 @@ public class PriceCalculator
             {
                 throw new ArgumentNullException();
             }
-
+            
+            if(w.UnitsForDiscount == 0){
+                total += item.Value * w.UnitPrice;
+            } else {
             total += (item.Value / w.UnitsForDiscount) * w.DiscountMarkdown
                 + (item.Value % w.UnitsForDiscount) * w.UnitPrice;
+            }
         }
 
         return total;
